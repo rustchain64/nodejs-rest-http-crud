@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Fruit Stock Management</title>
+    <title>PIE API</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/wingcss/0.1.8/wing.min.css"
@@ -21,59 +21,165 @@
         outline: 0;
         font-family: 'Open Sans', serif;
       }
+      #list-header {
+        font-weight: bolder;
+      }
     </style>
   </head>
   <body>
     <div class="container" id="app">
-      <h1>Node.js Crud Application</h1>
+      <h2>PIE DATA API</h2>
+     <!-- <div>{{ referrals }}</div> -->
 
+     <h3>Referrals List</h3>
+      <div class="row">
+        <div class="col-1" id="list-header">Your Name</div>
+        <div class="col-1" id="list-header">Referral Name</div>
+        <div class="col-1" id="list-header">Agent Name</div>
+        <div class="col-1" id="list-header">Agent Code</div>
+        <div class="col-1" id="list-header">Business Name</div>
+        <div class="col-1" id="list-header">Phone</div>
+        <div class="col-2" id="list-header">Email</div>
+        <!-- <div class="col-2" id="list-header">SS Number</div>
+        <div class="col-2" id="list-header">Bank Name</div>
+        <div class="col-2" id="list-header">Routing Number</div>
+        <div class="col-2" id="list-header">Account Number</div>
+        <div class="col-2" id="list-header">Notes</div>
+        <div class="col-2" id="list-header">Description</div>
+        <div class="col-2" id="list-header">Published</div> -->
+      </div>
+
+      <div class="row" v-for="referral in referrals">
+        <div class="col-1">{{ referral.yourname }}</div>
+        <div class="col-1">{{ referral.referralname }}</div>
+        <div class="col-1">{{ referral.agentname }}</div>
+        <div class="col-1">{{ referral.agentcode }}</div>
+        <div class="col-1">{{ referral.businessname }}</div>
+        <div class="col-1">{{ referral.phone }}</div>
+        <div class="col-2">{{ referral.email }}</div>
+        <!-- <div class="col-2">{{ referral.ss }}</div>
+        <div class="col-2">{{ referral.bankname }}</div>
+        <div class="col-2">{{ referral.routingnumber }}</div>
+        <div class="col-2">{{ referral.accountnumber }}</div>
+        <div class="col-2">{{ referral.title }}</div>
+        <div class="col-2">{{ referral.description }}</div>
+        <div class="col-2">{{ referral.published }}</div> -->
+      
+        <!-- <div class="col-3">
+          <a @click="edit( referral )" class="btn">[E]</a>
+          <a @click="remove( referral )" class="btn">[X]</a>
+        </div> -->
+      </div>
+
+
+
+
+     <h3>Add/Edit a Referral</h3>
       <p>
-        This application demonstrates how a Node.js application implements a
-        CRUD endpoint to manage <em>fruits</em>. This management interface
-        invokes the CRUD service endpoint, that interact with a PosgreSQL
-        database .
+         <em>User Data</em>. 
       </p>
 
-      <h3>Add/Edit a fruit</h3>
+      <h3>Add/Edit a User</h3>
 
-      <form @submit.prevent="update">
+      <form @submit.prevent="updateUsers">
         <div class="row">
-          <div class="col-6">
+          <div class="col-4">
             <input
-              v-model="form.name"
-              type="text"
-              placeholder="Name"
-              ref="name"
+            type="text"
+              v-model="form.firstname"              
+              placeholder="firstname"
+              ref="firstname"
               size="60"
             />
           </div>
-          <div class="col-6">
+          <div class="col-4">
             <input
-              type="number"
-              v-model="form.stock"
-              placeholder="Stock"
-              ref="stock"
+              type="text"
+              v-model="form.lastname"
+              placeholder="lastname"
+              ref="lastname"
               size="60"
-              min="0"
+            />
+          </div>
+          <div class="col-4">
+            <input
+              type="text"
+              v-model="form.username"
+              placeholder="username"
+              ref="username"
+              size="60"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <input
+            type="text"
+              v-model="form.agentcode"              
+              placeholder="agentcode"
+              ref="agentcode"
+              size="60"
+            />
+          </div>          
+          <div class="col-4">
+            <input
+              type="text"
+              v-model="form.persona"
+              placeholder="persona"
+              ref="persona"
+              size="60"
+            />
+          </div>
+          <div class="col-4">
+            <input
+              type="text"
+              v-model="form.hash"
+              placeholder="hash"
+              ref="hash"
+              size="60"
+            />
+          </div>
+          <div class="col-4">
+            <input
+              type="text"
+              v-model="form.password"
+              placeholder="password"
+              ref="password"
+              size="60"
             />
           </div>
         </div>
         <input type="submit" value="Save" />
       </form>
 
-      <h3>Fruit List</h3>
-
+      <h3>Users List</h3>
+      <!-- {{ users }} -->
       <div class="row">
-        <div class="col-2">Name</div>
-        <div class="col-2">Stock</div>
+        <div class="col-1" id="list-header">Id</div>
+        <div class="col-1" id="list-header">First Name</div>
+        <div class="col-1" id="list-header">Last Name</div>
+        <div class="col-1" id="list-header">Username</div>        
+        <div class="col-1" id="list-header">Agent Code</div>
+        <div class="col-1" id="list-header">Persona</div>
+        <div class="col-1" id="list-header">Hash</div>
+        <div class="col-1" id="list-header">Password</div>
+        
       </div>
 
-      <div class="row" v-for="fruit in fruits">
-        <div class="col-2">{{ fruit.name }}</div>
-        <div class="col-2">{{ fruit.stock }}</div>
-        <div class="col-8">
-          <a @click="edit( fruit )" class="btn">Edit</a>
-          <a @click="remove( fruit )" class="btn">Remove</a>
+      <div class="row" v-for="user in users">
+        <div class="col-1">{{ user.id }}</div>
+        <div class="col-1">{{ user.firstname }}</div>
+        <div class="col-1">{{ user.lastname }}</div>
+        <div class="col-1">{{ user.username }}</div>        
+        <div class="col-1">{{ user.agentcode }}</div>
+        <div class="col-1">{{ user.persona }}</div>
+        <div class="col-1">{{ user.hash }}</div>
+        <div class="col-1">{{ user.password }}</div>
+        
+        
+        <div class="col-4">
+          <a @click="edit( user )" class="btn">[E]</a>
+          <a @click="remove( user )" class="btn">[X]</a>
         </div>
       </div>
     </div>
@@ -89,53 +195,90 @@
         data: {
           form: {
             id: -1,
-            name: '',
-            stock: 0,
+            firstname: '',
+            lastname: '',
+            username: '',
+            agentcode: '',
+            persona: '',
+            hash: '',
+            password: '',           
           },
-          fruits: [],
+          referrals: [],
+          users: [],
           method: '',
           url: '',
           data: {},
-          fruit: '',
+          user: '',
         },
 
         methods: {
-          edit(fruit) {
-            this.form.name = fruit.name;
-            this.form.stock = parseInt(fruit.stock);
-            this.form.id = fruit.id;
+          edit(user) {
+            this.form.id = user.id;
+            this.form.username = user.firstname;
+            this.form.password = user.lastname;
+            this.form.username = user.username;
+            this.form.persona = user.agentcode;
+            this.form.password = user.persona;
+            this.form.password = user.hash;
+            this.form.persona = user.password;            
           },
-          async remove(fruit) {
-            await fetch(`/api/fruits/${fruit.id}`, {
+          async remove(user) {
+            await fetch(`/api/users/${user.id}`, {
               method: 'DELETE',
             })
-              .then(this._success)
+              .then(this._userSuccess)
               .catch(this._error);
           },
-          async _refreshPageData() {
-            const result = await fetch('/api/fruits', {
+          async _refreshReferralData() {
+            const referralResults = await fetch('/api/referrals', {
               method: 'GET',
             });
-            if (result.ok) {
-              const resultData = await result.json();
-              this.fruits = resultData;
+            if (referralResults.ok) {
+              const resultData = await referralResults.json();
+              this.referrals = resultData;
             } else {
               console.log(result.statusText);
             }
           },
-          async update() {
-            this.form.name = this.$refs.name.value;
-            this.form.stock = this.$refs.stock.value;
+          async _refreshUserData() {
+            const userResults = await fetch('/api/users', {
+              method: 'GET',
+            });
+            if (userResults.ok) {
+              const resultData = await userResults.json();
+              this.users = resultData;
+            } else {
+              console.log(result.statusText);
+            }
+          },
+          async updateUsers() {
+            this.form.firstname = this.$refs.firstname.value;
+            this.form.lastname = this.$refs.lastname.value;
+            this.form.username = this.$refs.username.value;
+            this.form.agentcode = this.$refs.agentcode.value;            
+            this.form.persona = this.$refs.persona.value;
+            this.form.hash = this.$refs.hash.value;
+            this.form.password = this.$refs.password.value;
             if (this.form.id == -1) {
               this.method = 'POST';
-              this.url = '/api/fruits';
-              this.data.name = this.form.name;
-              this.data.stock = this.form.stock;
+              this.url = '/api/users';
+              this.data.firstname = this.form.firstname;
+              this.data.lastname = this.form.lastname;
+              this.data.username = this.form.username;
+              this.data.agentcode = this.form.agentcode;              
+              this.data.persona = this.form.persona;
+              this.data.hash = this.form.hash;
+              this.data.password = this.form.password;
             } else {
               this.method = 'PUT';
-              this.url = '/api/fruits/' + this.form.id;
-              this.data.name = this.form.name;
-              this.data.stock = this.form.stock;
+              this.url = '/api/users/' + this.form.id;
+              this.data.firstname = this.form.firstname;
+              this.data.lastname = this.form.lastname;
+              this.data.username = this.form.username;
+              this.data.agentcode = this.form.agentcode;              
+              this.data.persona = this.form.persona;
+              this.data.hash = this.form.hash;
+              this.data.password = this.form.password;
             }
 
             await fetch(this.url, {
@@ -145,12 +288,12 @@
               },
               body: JSON.stringify(this.data),
             })
-              .then(this._success)
+              .then(this._userSuccess)
               .catch(this._error);
           },
-          _success(response) {
+          _userSuccess(response) {
             this._refreshPageData();
-            this._clearForm();
+            this._clearUserForm();
           },
           _error(response) {
             alert(
@@ -159,14 +302,20 @@
                 : response.statusText
             );
           },
-          _clearForm() {
-            this.form.name = '';
-            this.form.stock = 0;
+          _clearUserForm() {
+            this.form.firstname = '';
+            this.form.lastname = '';
+            this.form.username = '';
+            this.form.agentcode = '';
+            this.form.persona = '';
+            this.form.hash = '';
+            this.form.password = '';
             this.form.id = -1;
           },
         },
         mounted: function () {
-          this._refreshPageData();
+          this._refreshUserData();
+          this._refreshReferralData();
         },
       });
     </script>

@@ -44,6 +44,8 @@ For this example, you will also need a postgres db running on your Openshift clu
 
 `oc new-app -e POSTGRESQL_USER=luke -ePOSTGRESQL_PASSWORD=secret -ePOSTGRESQL_DATABASE=my_data centos/postgresql-10-centos7 --name=my-database`
 
+or --name=postgresql
+
 Then run `npm run openshift` to deploy your app
 
 Run the following command to show the newly exposed route that you can navigate:
@@ -55,3 +57,15 @@ nodejs-rest-http-crud   nodejs-rest-http-crud-opentel.apps-crc.testing          
 #### Running on Openshift with traces enabled
 
 * [Read more](./OTEL.md)
+
+# ###########################################################################3
+ {
+  "id": "3",
+  "firstname": "Carson", 
+  "lastname": "Cook", 
+  "username": "captain", 
+  "agentcode": "testcode", 
+  "persona": "admin", 
+  "hash": "cook", 
+  "password": "cook1234" 
+  }
