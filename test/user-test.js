@@ -11,24 +11,24 @@ const mockDb = {
   }
 };
 
-describe('Fruits', () => {
+describe('Users', () => {
   it('get all', async () => {
     const mockApi = {
       findAll: () => Promise.resolve({ rows: [{ id: 1 }] })
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const { body } = await supertest(app)
-      .get('/api/fruits')
+      .get('/api/users')
       .expect('Content-Type', /json/)
       .expect(200);
 
@@ -42,17 +42,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .get('/api/fruits')
+      .get('/api/users')
       .expect(400);
 
     assert.strictEqual(response.statusCode, 400);
@@ -66,12 +66,12 @@ describe('Fruits', () => {
       }
     };
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
     const { body } = await supertest(app)
       .get('/api/fruits/1')
@@ -87,16 +87,16 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
     const response = await supertest(app)
-      .get('/api/fruits/1')
+      .get('/api/users/1')
       .expect(404);
     assert.strictEqual(response.text, 'Item 1 not found');
   });
@@ -107,17 +107,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .get('/api/fruits/1')
+      .get('/api/users/1')
       .expect(400);
     assert.strictEqual(response.statusCode, 400);
   });
@@ -137,17 +137,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .send(fruitData)
       .expect(201);
     assert.strictEqual(response.statusCode, 201);
@@ -163,14 +163,14 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .send(fruitData)
       .expect(422);
     assert.strictEqual(response.statusCode, 422);
     assert.strictEqual(response.text, 'The name is required!');
   });
 
-  it('post - error - no stock', async () => {
+  it('post - error - no referralname', async () => {
     const fruitData = {
       name: 'Banana'
     };
@@ -214,17 +214,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .send(fruitData)
       .expect(400);
 
@@ -237,7 +237,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .send({ name: 'Banana', stock: 10, id: 22 })
       .expect(422);
 
@@ -251,7 +251,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .expect(415);
 
     assert.strictEqual(response.statusCode, 415);
@@ -264,7 +264,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .set('Content-Type', 'application/json')
       .send('Some text')
       .expect(415);
@@ -280,7 +280,7 @@ describe('Fruits', () => {
     const xmlFruitData = '<?xml version="1.0" encoding="UTF-8"?><fruit><name>Banana</name><stock>10</stock></fruit>';
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .set('Content-Type', 'application/xml')
       .send(xmlFruitData)
       .expect(415);
@@ -296,7 +296,7 @@ describe('Fruits', () => {
     const xmlFruitData = '<?xml version="1.0" encoding="UTF-8"?><fruit><name>adam</name><stock>10</stock></fruit>';
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .set('Content-Type', 'application/json')
       .send(xmlFruitData)
       .expect(415);
@@ -316,7 +316,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .send(fruitData)
       .expect(422);
 
@@ -335,7 +335,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .post('/api/fruits')
+      .post('/api/users')
       .send(fruitData)
       .expect(422);
 
@@ -360,17 +360,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .put('/api/fruits/20')
+      .put('/api/users/20')
       .send(fruitData)
       .expect(204);
 
@@ -387,7 +387,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .put('/api/fruits/20')
+      .put('/api/users/20')
       .expect(422)
       .send(fruitData);
 
@@ -401,7 +401,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .put('/api/fruits/20')
+      .put('/api/users/20')
       .send({ name: 'name' })
       .expect(422);
 
@@ -415,7 +415,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .put('/api/fruits/20')
+      .put('/api/users/20')
       .send({ name: 'Banana', stock: 10, id: '22' })
       .expect(422);
 
@@ -437,17 +437,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .put('/api/fruits/20')
+      .put('/api/users/20')
       .send(fruitData)
       .expect(404);
 
@@ -469,17 +469,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .put('/api/fruits/22')
+      .put('/api/users/22')
       .send(fruitData)
       .expect(400);
 
@@ -492,7 +492,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .put('/api/fruits/20')
+      .put('/api/users/20')
       .expect(415);
 
     assert.strictEqual(response.statusCode, 415);
@@ -505,7 +505,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .put('/api/fruits/20')
+      .put('/api/users/20')
       .set('Content-Type', 'application/json')
       .send('Some text')
       .expect(415);
@@ -537,7 +537,7 @@ describe('Fruits', () => {
     const xmlFruitData = '<?xml version="1.0" encoding="UTF-8"?><fruit><name>adam</name><stock>10</stock></fruit>';
 
     const response = await supertest(app)
-      .put('/api/fruits/10')
+      .put('/api/users/10')
       .set('Content-Type', 'application/json')
       .send(xmlFruitData)
       .expect(415);
@@ -557,7 +557,7 @@ describe('Fruits', () => {
     });
 
     const response = await supertest(app)
-      .put('/api/fruits/10')
+      .put('/api/users/10')
       .send(fruitData)
       .expect(422);
 
@@ -574,17 +574,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .delete('/api/fruits/1')
+      .delete('/api/users/1')
       .expect(204);
 
     assert.strictEqual(response.statusCode, 204);
@@ -598,17 +598,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .delete('/api/fruits/1')
+      .delete('/api/users/1')
       .expect(404);
 
     assert.strictEqual(response.statusCode, 404);
@@ -623,17 +623,17 @@ describe('Fruits', () => {
     };
 
     // Mock the nested require
-    const routesStub = proxyquire('../lib/routes/fruits', {
-      '../api/fruits': mockApi
+    const routesStub = proxyquire('../lib/routes/users', {
+      '../api/users': mockApi
     });
 
     const app = proxyquire('../app', {
       './lib/db': mockDb,
-      './lib/routes/fruits': routesStub
+      './lib/routes/users': routesStub
     });
 
     const response = await supertest(app)
-      .delete('/api/fruits/1')
+      .delete('/api/users/1')
       .expect(400);
 
     assert.strictEqual(response.statusCode, 400);

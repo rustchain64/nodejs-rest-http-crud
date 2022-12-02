@@ -22,37 +22,13 @@ const logger = require('./logger.js');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+// const cors = require('cors');
 
 const app = express();
 
-// const corsOptions = {
-// origin: "https://your-website.com"
-// };
-
-const allowedDomains = ['http://localhost:5173',
-  'http://localhost:8080',
-  'http://localhost:8081',
-  'https://qod-web-ac-pie.pie-io-dal12-b3c-4x16-5d593c3630023cf58036e0ce4ac1c569-0000.us-south.containers.appdomain.cloud'];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // bypass the requests with no origin (like curl requests, mobile apps, etc )
-    if (!origin) return callback(null, true);
-
-    if (allowedDomains.indexOf(origin) === -1) {
-      const msg = `This site ${origin} does not have an access. Only specific domains are allowed to access it.`;
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  }
-}));
-
-// app.use(cors(corsOptions));
-
 const db = require('./lib/db');
-
 const fruits = require('./lib/routes/fruits');
+const codes = require('./lib/routes/codes');
 const users = require('./lib/routes/users');
 const referrals = require('./lib/routes/referrals');
 
@@ -66,9 +42,18 @@ app.use((error, request, response, next) => {
   next();
 });
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
 
+// app.use('/static', express.static(path.join(__dirname, '../public/dist/static/')));
+app.use(express.static(path.join(__dirname, 'public/dist')));
+app.get('/', function (req, res) {
+  res.sendFile('index.html', { root: path.join(__dirname, '../public/dist/') });
+});
+
+// app.use(express.static(path.join(__dirname, 'public')));
+
+// ADD HERE FOR AGENT CODE
 app.use('/api', fruits);
+app.use('/api', codes);
 app.use('/api', users);
 app.use('/api', referrals);
 

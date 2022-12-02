@@ -13,20 +13,11 @@ function findAll () {
 }
 
 function create (options = {}) {
-  console.log('USERS CREATE NEW');
-  console.log('firstname ', options.firstname);
-  console.log('lastname ', options.lastname);
-  console.log('username ', options.username);
-  console.log('agentcode ', options.agentcode);
-  console.log('persona ', options.persona);
-  console.log('hash ', options.hash);
-  console.log('password ', options.password);
   return db.query('INSERT INTO users (firstname, lastname, username, agentcode, persona, hash, password) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [options.firstname, options.lastname, options.username, options.agentcode, options.persona, options.hash, options.password]);
 }
 
 function update (options = {}) {
-  console.log('USERS UPDATE OLD by id');
-  return db.query('UPDATE users SET firstname = $1, lastname = $2, username = $3, agentcode = $4, hash = $5, password = $6 WHERE id = $8', [options.firstname, options.lastname, options.username, options.agentcode, options.persona, options.hash, options.password, options.id]);
+  return db.query('UPDATE users SET firstname = $1, lastname = $2, username = $3, agentcode = $4, persona = $5, hash = $6, password = $7 WHERE id = $8', [options.firstname, options.lastname, options.username, options.agentcode, options.persona, options.hash, options.password, options.id]);
 }
 
 function remove (id) {

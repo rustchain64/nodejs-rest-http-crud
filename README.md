@@ -44,9 +44,13 @@ For this example, you will also need a postgres db running on your Openshift clu
 
 `oc new-app -e POSTGRESQL_USER=luke -ePOSTGRESQL_PASSWORD=secret -ePOSTGRESQL_DATABASE=my_data centos/postgresql-10-centos7 --name=my-database`
 
-or --name=postgresql
+# or --name=postgresql
+
+# DEPLOY ###################################################3
 
 Then run `npm run openshift` to deploy your app
+
+# ####################################################
 
 Run the following command to show the newly exposed route that you can navigate:
 ```
