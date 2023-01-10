@@ -13,7 +13,7 @@ First, install the dependencies
 `npm install`
 
 A Postgres DB is needed, so if you are using Docker, then you can start a postgres db easily.
-
+# DOCKER ONLY
 `docker run --name os-postgres-db -e POSTGRESQL_USER=luke -e POSTGRESQL_PASSWORD=secret -e POSTGRESQL_DATABASE=my_data -d -p 5432:5432 centos/postgresql-10-centos7`
 
 In this example, the db user is `luke`, the password is `secret` and the database is `my_data`
@@ -42,7 +42,7 @@ Then create a new project using the `oc` commands
 
 For this example, you will also need a postgres db running on your Openshift cluster.
 
-`oc new-app -e POSTGRESQL_USER=luke -ePOSTGRESQL_PASSWORD=secret -ePOSTGRESQL_DATABASE=my_data centos/postgresql-10-centos7 --name=my-database`
+`oc new-app -e POSTGRESQL_USER=luke -ePOSTGRESQL_PASSWORD=secret -ePOSTGRESQL_DATABASE=pie_data centos/postgresql-10-centos7 --name=my-database`
 
 # or --name=postgresql
 

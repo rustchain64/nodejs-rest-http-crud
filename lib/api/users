@@ -4,20 +4,19 @@ const db = require('../db');
 
 function find (options = {}) {
   // return db.query('SELECT *T * FROM users FROM users WHERE id = $1', [id]);
-  return db.query('SELECT * FROM users WHERE username = $1', [options.id]);
+  return db.query('SELECT * FROM users WHERE username = $1 AND password = $2', [options.username, options.password]);
 }
 
 function findAll () {
-  console.log('USERS FIND ALL');
   return db.query('SELECT * FROM users');
 }
 
 function create (options = {}) {
-  return db.query('INSERT INTO users (firstname, lastname, username, agentcode, persona, hash, password) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [options.firstname, options.lastname, options.username, options.agentcode, options.persona, options.hash, options.password]);
+  return db.query('INSERT INTO users (firstname, lastname, username, agentcode, persona, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [options.firstname, options.lastname, options.username, options.agentcode, options.persona, options.password]);
 }
 
 function update (options = {}) {
-  return db.query('UPDATE users SET firstname = $1, lastname = $2, username = $3, agentcode = $4, persona = $5, hash = $6, password = $7 WHERE id = $8', [options.firstname, options.lastname, options.username, options.agentcode, options.persona, options.hash, options.password, options.id]);
+  return db.query('UPDATE users SET firstname = $1, lastname = $2, username = $3, agentcode = $4, persona = $5, password = $6 WHERE id = $7', [options.firstname, options.lastname, options.username, options.agentcode, options.persona, options.password, options.id]);
 }
 
 function remove (id) {

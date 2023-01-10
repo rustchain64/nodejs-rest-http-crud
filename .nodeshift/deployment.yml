@@ -6,12 +6,12 @@ spec:
         - name: DB_USERNAME
           valueFrom:
              secretKeyRef:
-               name: my-database-secret
+               name: pie-data-secret
                key: user
         - name: DB_PASSWORD
           valueFrom:
              secretKeyRef:
-               name: my-database-secret
+               name: pie-data-secret
                key: password
         readinessProbe:
           httpGet:

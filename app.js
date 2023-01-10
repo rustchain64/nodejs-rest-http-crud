@@ -22,15 +22,22 @@ const logger = require('./logger.js');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-// const cors = require('cors');
+const cors = require('cors');
 
 const app = express();
+
+const corsOptions = {
+  origin: 'http://localhost:8080'
+};
+
+app.use(cors(corsOptions));
 
 const db = require('./lib/db');
 const fruits = require('./lib/routes/fruits');
 const codes = require('./lib/routes/codes');
 const users = require('./lib/routes/users');
 const referrals = require('./lib/routes/referrals');
+const merchants = require('./lib/routes/merchants');
 
 app.use(bodyParser.json());
 app.use((error, request, response, next) => {
@@ -56,6 +63,7 @@ app.use('/api', fruits);
 app.use('/api', codes);
 app.use('/api', users);
 app.use('/api', referrals);
+app.use('/api', merchants);
 
 // Add a health check
 app.use('/ready', (request, response) => {
