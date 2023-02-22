@@ -49,11 +49,7 @@ BEFORE UPDATE ON users
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
-SELECT * FROM users WHERE id='3';
-('Carson', 'Cook', 'captain', 'testcode', 'admin', 'cook', 'cook1234');
-# #########################################################################
-# TESTS
-## test one
+# STEP FOUR
 POSTGRESS USERS TABLE
 INSERT INTO users (firstName,lastName,username,agentCode,persona,password)
 VALUES
@@ -71,6 +67,12 @@ VALUES
 ('Joshua', 'Hogue', 'joshua.h', 'AGE1Q0', 'agent', 'joshua2022'),
 ('Michael', 'Faught', 'michael.f', 'AGE5Q5', 'agent', 'michael2022'),
 ('William', 'Valasquez', 'william.v', 'AGE5R5', 'agent', 'william2022');
+
+# TESTS
+## test one
+SELECT * FROM users WHERE id='3';
+returns: 
+('Carson', 'Cook', 'captain', 'testcode', 'admin', 'cook', 'cook1234');
 
 
 # ########################33 CREATE TRIGGER ###################################
